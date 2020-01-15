@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
+const dotenv = require('dotenv').config();
 
 const app = express();
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb+srv://piedpiper:1122667788@cursojs-udemy-km7i7.mongodb.net/week10?retryWrites=true&w=majority', {
+mongoose.connect(process.env.connectionString,
+  {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
