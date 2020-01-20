@@ -1,8 +1,7 @@
-//no maximo 5 funcoes Index, Show, store, update, destroy
-
 const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
+const { findConnections, sendMessage } = require('../websocket');
 
 module.exports = {
   async index (req,res) {
@@ -36,6 +35,14 @@ module.exports = {
         techs: techsArray,
         location,
       });
+
+      // Filtro de conexões que estão no max 10km de distancia com pelo menos uma das techs 
+      const sendSocketMessageTo = findConnections(
+        { latitude, longitude},
+        techsArray,
+      )
+
+      sendMessage(sendSocketMessageTo, 'new-dev', dev);
     }
 
 
